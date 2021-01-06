@@ -1,55 +1,62 @@
-
+// global variables
 let downloadButton = document.getElementById("downloadButton");
 let recording = document.getElementById("download");
 let logElement = document.getElementById("log");
 let video = document.getElementById('video');
+var recorder;
+// set to timeout after 5  minutes
+let recordingTimeMS = 300000;
 
-let recordingTimeMS = 5000;
 
 function log(msg) {
   logElement.innerHTML += msg + "\n";
 }
 
+//set up timeout
 function wait(delayInMS) {
   return new Promise(resolve => setTimeout(resolve, delayInMS));
 }
 
+// grab available data and push it to blob
 function record(stream, lengthInMS){
-  let recorder = new MediaRecorder(stream);
+  recorder = new MediaRecorder(stream);
   let data = [];
 
   recorder.ondataavailable = event => data.push(event.data);
   recorder.start();
   log(recorder.state + " for " + (lengthInMS/1000) + " seconds...");
 
+  let recorded = wait(lengthInMS).then(
+    () => recorder.state == "recording" && recorder.stop()
+  );
+
   let stopped = new Promise((resolve, reject) => {
     recorder.onstop = resolve;
     recorder.onerror = event => reject(event.name);
   });
 
-  let recorded = wait(lengthInMS).then(
-    () => recorder.state == "recording" && recorder.stop()
-  );
-
+  
   return Promise.all([
     stopped,
-    recorded
   ])
   .then(() => data);
 }
 
-
+// on click preview stream and set mediarecorder stream to camera
 var start = function(){
   navigator.mediaDevices.getUserMedia({
     video: true,
     audio: true
   }).then(stream => {
+  	// let user see webcam and direct button to stream we are recording
     video.srcObject = stream;
     downloadButton.href = stream;
     video.captureStream = video.captureStream || video.mozCaptureStream;
     return new Promise(resolve => video.onplaying = resolve);
+    // once we have stuff to record start the recording
   }).then(() => record(video.captureStream(), recordingTimeMS))
   .then (recordedChunks => {
+  	// package all blobs into our final url to download
     let recordedBlob = new Blob(recordedChunks, { type: "video/mp4" });
     recording.src = URL.createObjectURL(recordedBlob);
     downloadButton.href = recording.src;
@@ -60,18 +67,17 @@ var start = function(){
   })
   .catch(log);
 }
+// stop the webcam stream tracks
 var stop = function() {
   var stream = video.srcObject;
-  var tracks = stream.getTracks();
-
-  for (var i = 0; i < tracks.length; i++) {
-    var track = tracks[i];
-    track.stop();
-  }
-
+  stream.getTracks().forEach(track => track.stop());
   video.srcObject = null;
+  if(recorder!=null){
+  	recorder.stop();
+  }
 }
 
+// function to just preview the webcam
 var preview = function(){
 	 vendorUrl = window.URL || window.webkitURL;
 	if (navigator.mediaDevices.getUserMedia) {
@@ -83,6 +89,7 @@ var preview = function(){
 		});
 	}
 }
+// start off by previewing
 $(function() {
     preview();
 });
