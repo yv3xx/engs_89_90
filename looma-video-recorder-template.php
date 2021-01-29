@@ -16,6 +16,7 @@ they want to edit a video
 
     <link rel="stylesheet" type="text/css" href="css/looma-video.css">
     <link rel="stylesheet" type="text/css" href="css/looma-media-controls.css">
+    <link rel="stylesheet" href= "css/looma-video-buttons.css">
 
     </head>
 
