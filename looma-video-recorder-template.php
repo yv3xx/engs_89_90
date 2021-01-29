@@ -39,13 +39,15 @@ they want to edit a video
             <a href="#!" class="btn btn-danger" onClick="stop()">Stop Cam</a>
             <a href="#!" class="btn btn-success" onClick="previewing()">Start Cam</a>
             <a href="#!" class="btn btn-success" onClick="start()">Start Recording</a>
-            <a id= "downloadButton" href="#!" class= "btn btn-secondary">Download Recording</a>
-            <pre id="log"></pre>
+            <a id= "downloadButton" href="#!" class= "btn btn-secondary" onClick="createNewElement()">Download Recording</a>
+            <div id="newElementId"></div>
+            <!--<pre id="log"></pre>-->
             </div>
 
         <!--Adds the toolbar to the video player screen-->
         <?php include ('includes/toolbar.php'); ?>
         <?php include ('includes/js-includes.php'); ?>
+        <script src="js/looma-create-input-box.js"></script>
         <script src="js/looma-media-controls.js"></script>          <!-- Looma Javascript -->
         <script src="js/looma-video.js"></script>          <!-- Looma Javascript -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
