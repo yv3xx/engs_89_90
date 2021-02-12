@@ -150,7 +150,7 @@ if (isset($_REQUEST["collection"])) {
        case "games":         $dbCollection = $games_collection;         break;
        case "edited_videos": $dbCollection = $edited_videos_collection; break;
        case "new_content":   $dbCollection = $new_content_collection;   break;
-       case "recordedVideos": $dbCollection = $recordedVideos_collection; break;
+       case "recordedVideos": $dbCollection = $activities_collection; break;
 
        default: echo "unknown collection: " . $collection;        return;   //TODO: return error here
        }
@@ -398,10 +398,10 @@ if (isset($_REQUEST["collection"])) {
               "author" => $_REQUEST['data'],
               "date" => gmdate("Y_m_d"),  //using greenwich time
               //"data" => $_REQUEST["data"],
-              "fp" => '../content/recorded_videos',
+              "fp" => '../content/recorded_videos/',
               "fn" => 'RecordedVideo'.gmdate("m_d_Y").'.mp4'
           );
-          saveToMongo($dbCollection, trim(htmlspecialchars_decode($_REQUEST['dn'],ENT_QUOTES)), $_REQUEST['ft'], $insert, $_REQUEST['activity']);
+          saveActivity($dbCollection,$insert);
         }
         // else handle other collections' specific save requirements
         return;
@@ -819,7 +819,7 @@ if (isset($_REQUEST["collection"])) {
             $result = alphabetize_by_dn($result);
 
             $unique[] = $result[0];
-            $specials = array('text', 'text-template', 'slideshow', 'looma', 'lesson', 'lesson-template', 'evi', 'history', 'map', 'game','video');
+            $specials = array('text', 'text-template', 'slideshow', 'video', 'looma', 'lesson', 'lesson-template', 'evi', 'history', 'map', 'game');
             for ($i = 1; $i < sizeof($result); $i++) {
                 //echo "ft is " . $result[$i]['ft'] . "   ";
 

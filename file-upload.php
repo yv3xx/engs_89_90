@@ -25,7 +25,7 @@
 <script type="text/javascript">
 var dn = "<?php echo $dn ?>";
 var ft = 'video';
-var collection = 'activities';
+var collection = 'recordedVideos';
 var data = "<?php echo $author ?>";
 var activity= 'true'
 </script>
