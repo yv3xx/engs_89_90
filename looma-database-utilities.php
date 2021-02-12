@@ -150,7 +150,7 @@ if (isset($_REQUEST["collection"])) {
        case "games":         $dbCollection = $games_collection;         break;
        case "edited_videos": $dbCollection = $edited_videos_collection; break;
        case "new_content":   $dbCollection = $new_content_collection;   break;
-       case "recordedvideo": $dbCollection = $recordedvideo_collection; break;
+       case "recordedVideos": $dbCollection = $recordedVideos_collection; break;
 
        default: echo "unknown collection: " . $collection;        return;   //TODO: return error here
        }
@@ -166,6 +166,7 @@ if (isset($_REQUEST["collection"])) {
      $lessons_collection       = $loomaDB -> lessons;
      $text_files_collection    = $loomaDB -> text_files;
      $edited_videos_collection = $loomaDB -> edited_videos;
+     $recordedVideos_collection = $loomaDB -> recordedVideos;
      */
     }
 
@@ -376,7 +377,7 @@ if (isset($_REQUEST["collection"])) {
         else if ($collection == "activities") {
             $insert = $_REQUEST['data'];
             $insert["date"] = gmdate("Y.m.d");  //using greenwich time
-            $insert["author"] = $_COOKIE['login'];
+            $insert["author"] = $_REQUEST['data'];  
             if (isset($_REQUEST['thumb'])) $insert['thumb'] = $_REQUEST['thumb'];
 
             saveActivity($dbCollection, $insert);
@@ -389,6 +390,18 @@ if (isset($_REQUEST["collection"])) {
             $result = mongoInsert($dbCollection, $insert);
 
             echo json_encode($result);
+        }
+        else if ($collection == "recordedVideos"){
+          $insert = array(
+              "dn" => trim(htmlspecialchars_decode($_REQUEST['dn'],ENT_QUOTES)),
+              "ft" => $_REQUEST["ft"],  //TYPE is video
+              "author" => $_REQUEST['data'],
+              "date" => gmdate("Y_m_d"),  //using greenwich time
+              //"data" => $_REQUEST["data"],
+              "fp" => '../content/recorded_videos',
+              "fn" => 'RecordedVideo'.gmdate("m_d_Y").'.mp4'
+          );
+          saveToMongo($dbCollection, trim(htmlspecialchars_decode($_REQUEST['dn'],ENT_QUOTES)), $_REQUEST['ft'], $insert, $_REQUEST['activity']);
         }
         // else handle other collections' specific save requirements
         return;
@@ -806,7 +819,7 @@ if (isset($_REQUEST["collection"])) {
             $result = alphabetize_by_dn($result);
 
             $unique[] = $result[0];
-            $specials = array('text', 'text-template', 'slideshow', 'looma', 'lesson', 'lesson-template', 'evi', 'history', 'map', 'game');
+            $specials = array('text', 'text-template', 'slideshow', 'looma', 'lesson', 'lesson-template', 'evi', 'history', 'map', 'game','video');
             for ($i = 1; $i < sizeof($result); $i++) {
                 //echo "ft is " . $result[$i]['ft'] . "   ";
 

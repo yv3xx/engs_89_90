@@ -217,7 +217,7 @@ $dbhost = 'localhost';
         $edited_videos_collection = $loomaDB -> edited_videos;
         $volunteers_collection = $loomaDB -> volunteers;
         $new_content_collection = $loomaDB -> new_content;
-        $recordedvideo_collection = $loomaDB -> recorded_videos;
+        $recordedVideos_collection = $loomaDB -> recordedVideos;
 
         //the lines below are commented out for now. some Looma installs have old MONGO versions that dont do 'createIndex'
         //$activities_collection->createIndex(array('ch_id' => 1));
