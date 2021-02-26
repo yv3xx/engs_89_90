@@ -39,6 +39,7 @@ they want to edit a video
             <a href="#!" class="btn btn-danger" onClick="stop()">Stop Cam</a>
             <a href="#!" class="btn btn-success" onClick="previewing()">Start Cam</a>
             <a href="#!" class="btn btn-success" onClick="start()">Start Recording</a>
+            <input type="checkbox" id="SR" name="Screen Record">
             <a id= "downloadButton" href="#!" class= "btn btn-secondary" onClick="createNewElement()">Download Recording</a>
             <div id="newElementId"></div>
             <!--<pre id="log"></pre>-->

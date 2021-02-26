@@ -399,7 +399,7 @@ if (isset($_REQUEST["collection"])) {
               "date" => gmdate("Y_m_d"),  //using greenwich time
               //"data" => $_REQUEST["data"],
               "fp" => '../content/recorded_videos/',
-              "fn" => 'RecordedVideo'.gmdate("m_d_Y").'.mp4'
+              "fn" => trim(htmlspecialchars_decode($_REQUEST['dn'],ENT_QUOTES)).'.mp4'
           );
           saveActivity($dbCollection,$insert);
         }

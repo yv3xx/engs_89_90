@@ -8,7 +8,7 @@
 	$filetype = $_FILES["myfile"]["type"];
 	$filesize = $_FILES["myfile"]["size"];
 	$tempfile = $_FILES["myfile"]["tmp_name"];
-	$filenameWithDirectory = "../content/recorded_videos/".$filename;
+	$filenameWithDirectory = "../content/recorded_videos/".$dn.".mp4";
 	} else {
 		echo "something went wrong";
 	}
