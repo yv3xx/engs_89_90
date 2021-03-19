@@ -1,1 +1,0 @@
-Add the contents of this folder to the "Images" folder on the looma stack
