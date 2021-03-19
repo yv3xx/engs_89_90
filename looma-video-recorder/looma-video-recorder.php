@@ -35,7 +35,6 @@ they want to edit a video
                 <div id="title-area" hidden>
                     <h3 id="title"></h3>
                 </div>
-
             <a href="#!" class="btn btn-danger" onClick="stop()">Stop Cam</a>
             <a href="#!" class="btn btn-success" onClick="previewing()">Start Cam</a>
             <a href="#!" class="btn btn-success" onClick="start()">Start Recording</a>
@@ -43,6 +42,28 @@ they want to edit a video
             <a id= "downloadButton" href="#!" class= "btn btn-secondary" onClick="createNewElement()">Download Recording</a>
             <div id="newElementId"></div>
             <!--<pre id="log"></pre>-->
+                  <!-- icon buttons
+                        <!-- Stop Camera --> 
+                        <button type="button" href="#!" class = "btn btn-danger" onclick="stop()" >
+                            <img draggable="false" src="images/video-stop.png" height="25px" width="50px">
+                            <?php tooltip("Stop Cam") ?>
+                        </button>
+                        <!--Start Camera-->
+                        <button type="button" href="#!" onclick="previewing()" class="btn btn-success">
+                            <img draggable="false" src="images/video-play.png"  height="25px" width="50px" >
+                            <?php tooltip("Start Cam") ?>
+                        </button>
+                        <!--Start Recording-->
+                        <button type="button" href="#!" onclick="start()" class="btn btn-success">
+                            <img draggable="false" src="images/video-record.png"  height="25px" width="50px" >
+                            <?php tooltip("Start Recording") ?>
+                        </button>
+                        <!--Download Recording-->
+                        <button type="button" id="downloadButton" href="#!" onClick="createNewElement()" class="btn btn-dark">
+                            <img draggable="false" src="images/video-download.png"  height="25px" width="50px" >
+                            <?php tooltip("Download Recording") ?>
+                        </button>
+                  -->
             </div>
 
         <!--Adds the toolbar to the video player screen-->
